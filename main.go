@@ -13,9 +13,6 @@ import (
 func main() {
 
 	router := gin.New()
-
-	models.ConnectDataBase()
-
 	r := router.Group("/v1")
 
 	models.CreateClient()

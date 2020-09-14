@@ -23,11 +23,26 @@ func GetAll(c *gin.Context) { // Get model if exist
 	// need to panic for error
 	if response.Error() == nil {
 		columns := response.Results[0].Series[0].Columns
-		for i := 0; i < len(response.Results[0].Series); i++ {
+		for i := 0; i < len(response.Results[0].Series[0].Values); i++ {
 			interval := models.NewInterval(columns, response.Results[0].Series[0].Values[i])
 			intervals = append(intervals, *interval)
 		}
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": intervals})
+}
+
+func CreateIntervals(c *gin.Context) {
+	var input models.Interval
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	tags, fields := input.TagField()
+
+	models.CreateBatchPoint("ivdb", "hourly_data", tags, fields)
+
+	c.JSON(http.StatusOK, gin.H{"data": input})
 }

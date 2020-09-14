@@ -15,5 +15,20 @@ services:
       - INFLUXDB_DB=db0
       - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}
       - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD}
+
+  web:
+    restart: "no"
+    build: 
+      context: .
+      dockerfile: ./Dockerfile 
+    environment: 
+      - API_ADDRESS=${API_ADDRESS}
+    entrypoint: go run main.go #even after chmod +x dev-entrypoint.sh in dockerfile, there is permission problem; but hey at least this work
+    volumes:
+      - .:/code
+    ports:
+      - "8080:8080"
+    depends_on:
+      - influxdb
 volumes:
   influxdb-storage:

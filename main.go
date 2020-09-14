@@ -6,7 +6,7 @@ import (
 	//client "github.com/influxdata/influxdb1-client/v2"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rahmanfadhil/gin-bookstore/controllers"
+	"github.com/tinnaing347/interval-flux/controllers"
 	"github.com/tinnaing347/interval-flux/models"
 )
 
@@ -19,7 +19,8 @@ func main() {
 
 	defer models.DB.Close()
 
-	r.GET("/books", controllers.FindBooks)
+	r.GET("/intervals", controllers.GetAll)
+	r.POST("/intervals", controllers.CreateIntervals)
 	router.Run()
 
 	//client code for influxdb v2.0

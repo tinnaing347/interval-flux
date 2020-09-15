@@ -19,7 +19,7 @@ func main() {
 
 	defer models.DB.Close()
 
-	r.GET("/intervals", controllers.GetAll)
+	r.GET("/intervals", controllers.GetIntervals)
 	r.POST("/intervals", controllers.CreateIntervals)
 	router.Run()
 

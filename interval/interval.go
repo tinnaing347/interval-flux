@@ -1,4 +1,4 @@
-package models
+package interval
 
 import (
 	"log"
@@ -8,15 +8,15 @@ import (
 )
 
 type Interval struct {
-	Demand             float32 `mapstructure:"demand" json:"demand"`
-	Energy             float32 `mapsturcture:"energy" json:"energy"`
-	Time               string  `mapsturcture:"time" json:"time"`
-	Unique_meter_seqid string  `mapsturcture:"unique_meter_seqid" json:"unique_meter_seqid"`
+	UniqueMeterSeqid string  `mapstructure:"unique_meter_seqid" json:"unique_meter_seqid"`
+	Demand           float32 `mapstructure:"demand" json:"demand"`
+	Energy           float32 `mapsturcture:"energy" json:"energy"`
+	Time             string  `mapsturcture:"time" json:"time"`
 }
 
 func (i *Interval) TagField() (map[string]string, map[string]interface{}, time.Time) {
 
-	tags := map[string]string{"unique_meter_seqid": i.Unique_meter_seqid}
+	tags := map[string]string{"unique_meter_seqid": i.UniqueMeterSeqid}
 	fields := map[string]interface{}{
 		"energy": i.Energy,
 		"demand": i.Demand,
@@ -34,7 +34,6 @@ func Serializer(columns []string, values []interface{}) map[string]interface{} {
 	for i := 0; i < len(columns); i++ {
 		map_[columns[i]] = values[i]
 	}
-
 	return map_
 }
 

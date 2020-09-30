@@ -1,21 +1,22 @@
 package main
 
 import (
-
-	//_ "github.com/influxdata/influxdb1-client" // this is important because of the bug in go mod
-	//client "github.com/influxdata/influxdb1-client/v2"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tinnaing347/interval-flux/interval"
 	"github.com/tinnaing347/interval-flux/models"
 )
 
+//_ "github.com/influxdata/influxdb1-client" // this is important because of the bug in go mod
+//client "github.com/influxdata/influxdb1-client/v2"
+
 func main() {
 
 	router := gin.New()
 	r := router.Group("/v1")
 
-	models.CreateClient()
+	models.CreateClient(os.Getenv("DB_ADDR"))
 
 	defer models.DB.Close()
 
@@ -33,7 +34,7 @@ func main() {
 
 	// result, err := queryAPI.Query(context.Background(), `from(bucket:"ivdb")|> range(start: 2020-08-22T23:30:00Z) |> filter(fn: (r) => r._measurement == "hourly_data")`)
 
-	// fmt.Println(result.Results)
+	// // fmt.Println(result.Results)
 	// if err == nil {
 	// 	for result.Next() {
 	// 		fmt.Println(result.Record())

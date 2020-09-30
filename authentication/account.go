@@ -20,7 +20,7 @@ type Login struct {
 
 //account for database
 type Account struct {
-	UserName string    `mapsturcture:"username" json:"time"`
+	UserName string    `mapsturcture:"username" json:"username"`
 	Password string    `mapsturcture:"password" json:"password"`
 	Role     string    `mapsturcture:"role" json:"role"`
 	Created  time.Time `mapsturcture:"time" json:"time"`

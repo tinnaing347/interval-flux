@@ -22,8 +22,8 @@ services:
       context: .
       dockerfile: ./Dockerfile 
     environment: 
-      - API_ADDRESS=${API_ADDRESS}
-    entrypoint: go run main.go #even after chmod +x dev-entrypoint.sh in dockerfile, there is permission problem; but hey at least this work
+      - DB_ADDR=${DB_ADDR}
+    entrypoint: /code/dev-entrypoint.sh
     volumes:
       - .:/code
     ports:
